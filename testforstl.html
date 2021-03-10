@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="//unpkg.com/3d-force-graph"></script>
+		<script src="three_lib/three.js"></script>
+		<script src="three_lib/STLLoader.js"></script>
+		<script src="three_lib/OrbitControls.js"></script>
+		<script src="three_lib/stats.min.js"></script>
+		<script src="three_lib/dat.gui.min.js"></script>
+		<title></title>
+	</head>
+	<body>
+		<div id = "3d-graph"></div>
+		<script>
+			fetch("dataset/test.json").then(res => res.json()).then(data => {
+				const graph = ForceGraph3D()
+				(document.getElementById("3d-graph"))
+				.graphData(data)
+				.nodeId("id")
+				.nodeThreeObject(node=>nodePainting(node))
+				
+				async function nodePainting(node) {
+				    var loader = new THREE.STLLoader();
+				    var mesh ;
+				    var mat = new THREE.MeshLambertMaterial({color: 0x00ffff});
+				    await new Promise((resolve) => {
+				        loader.load("3dmodel/test.stl", async function (geometry) {
+				            mesh = new THREE.Mesh(geometry, mat);
+				            resolve();
+				        });
+				    });
+				    return mesh;
+				}
+				
+			})
+		</script>
+	</body>
+	
+</html>
