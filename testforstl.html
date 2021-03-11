@@ -20,17 +20,13 @@
 				.nodeId("id")
 				.nodeThreeObject(node=>nodePainting(node))
 				
-				async function nodePainting(node) {
-				    var loader = new THREE.STLLoader();
-				    var mesh ;
-				    var mat = new THREE.MeshLambertMaterial({color: 0x00ffff});
-				    await new Promise((resolve) => {
-				        loader.load("3dmodel/test.stl", async function (geometry) {
-				            mesh = new THREE.Mesh(geometry, mat);
-				            resolve();
-				        });
-				    });
-				    return mesh;
+				function nodePainting(node) {
+					var loader = new THREE.STLLoader();
+					var mesh ;
+					var mat = new THREE.MeshLambertMaterial({color: 0x00ffff});
+					var geometry = loader.load("3dmodel/test.stl");
+				        mesh = new THREE.Mesh(geometry, mat);
+					return mesh;
 				}
 				
 			})
